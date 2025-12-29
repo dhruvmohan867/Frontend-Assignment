@@ -7,9 +7,9 @@ export default function HttpNode({ data }) {
     <BaseNode title="HTTP" outputs={outputs} accent="#0ea5e9">
       <div style={{ display: 'flex', gap: 6 }}>
         <select
+          className="ui-input"
           value={data.method ?? 'GET'}
           onChange={(e) => data.onChange?.({ ...data, method: e.target.value })}
-          style={{ border: '1px solid #e5e7eb', borderRadius: 6, padding: 6, fontSize: 13 }}
         >
           <option>GET</option>
           <option>POST</option>
@@ -17,10 +17,11 @@ export default function HttpNode({ data }) {
           <option>DELETE</option>
         </select>
         <input
+          className="ui-input"
           placeholder="https://api.example.com"
           value={data.url ?? ''}
           onChange={(e) => data.onChange?.({ ...data, url: e.target.value })}
-          style={{ flex: 1, border: '1px solid #e5e7eb', borderRadius: 6, padding: 6, fontSize: 13 }}
+          style={{ flex: 1 }}
         />
       </div>
     </BaseNode>

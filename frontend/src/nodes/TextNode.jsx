@@ -22,11 +22,11 @@ export default function TextNode({ data }) {
   return (
     <BaseNode title="Text" inputs={inputs} outputs={outputs} width={width} height={height} accent="#0ea5e9">
       <textarea
+        className="ui-input"
         value={value}
         onChange={(e) => data.onChange?.(e.target.value)}
         placeholder="Type... use {{variable}} to add inputs"
-        style={{ width: '100%', height: height - 70, resize: 'none', outline: 'none',
-          border: '1px solid #e5e7eb', borderRadius: 6, padding: 8, fontSize: 13 }}
+        style={{ height: height - 70, resize: 'none' }}
       />
     </BaseNode>
   )
