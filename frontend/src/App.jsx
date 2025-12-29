@@ -10,39 +10,15 @@ import ReactFlow, {
   Position,
 } from 'reactflow'
 import submit from './submit.js'
-
-function extractVars(text) {
-  const re = /\{\{\s*([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\}\}/g
-  const set = new Set()
-  let m
-  while ((m = re.exec(text))) set.add(m[1])
-  return Array.from(set)
-}
-
-function TextNode({ data }) {
-  const value = data.value || ''
-  const vars = extractVars(value)
-  const lines = value.split('\n')
-  const longest = Math.max(...lines.map(l => l.length), 20)
-  const width = Math.min(500, 180 + longest * 7)   // auto-resize width
-  const height = Math.min(400, 100 + lines.length * 24) // auto-resize height
-
-  return (
-    <div style={{ padding: 8, border: '1px solid #ccc', borderRadius: 8, background: '#fff', width, height }}>
-      <div style={{ fontWeight: 600, marginBottom: 6 }}>Text</div>
-      {vars.map((v, i) => (
-        <Handle key={v} type="target" id={`var-${v}`} position={Position.Left} style={{ top: 20 + i * 22 }} />
-      ))}
-      <Handle type="source" position={Position.Right} id="out" />
-      <textarea
-        value={value}
-        onChange={(e) => data.onChange(e.target.value)}
-        placeholder="Type here... use {{variable}} to add handles"
-        style={{ width: '100%', height: height - 40, resize: 'none', outline: 'none', border: '1px solid #ddd', borderRadius: 6, padding: 8 }}
-      />
-    </div>
-  )
-}
+import TextNode from './nodes/TextNode.jsx'
+import InputNode from './nodes/InputNode.jsx'
+import OutputNode from './nodes/OutputNode.jsx'
+import LLMNode from './nodes/LLMNode.jsx'
+import MathNode from './nodes/MathNode.jsx'
+import DelayNode from './nodes/DelayNode.jsx'
+import MergeNode from './nodes/MergeNode.jsx'
+import ToggleNode from './nodes/ToggleNode.jsx'
+import HttpNode from './nodes/HttpNode.jsx'
 
 export default function App() {
   const initialNodes = useMemo(() => ([
@@ -53,7 +29,17 @@ export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
-  const nodeTypes = useMemo(() => ({ textNode: TextNode }), [])
+  const nodeTypes = useMemo(() => ({
+    textNode: TextNode,
+    inputNode: InputNode,
+    outputNode: OutputNode,
+    llmNode: LLMNode,
+    mathNode: MathNode,
+    delayNode: DelayNode,
+    mergeNode: MergeNode,
+    toggleNode: ToggleNode,
+    httpNode: HttpNode,
+  }), [])
 
   // inject per-node change handler
   React.useEffect(() => {
