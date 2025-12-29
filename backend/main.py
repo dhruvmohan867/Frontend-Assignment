@@ -1,20 +1,22 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict
 from collections import deque
 import os
 from dotenv import load_dotenv
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
+origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173")
+origins = [o.rstrip("/") for o in origins_env.split(",") if o.strip()]
+
 app = FastAPI()
 
-origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
-# Allow local frontend to call the API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",  # allow Vercel previews
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
