@@ -4,6 +4,9 @@ from pydantic import BaseModel
 from typing import List, Dict
 from collections import deque
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
