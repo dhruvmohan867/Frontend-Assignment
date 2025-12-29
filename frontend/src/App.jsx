@@ -107,11 +107,11 @@ export default function App() {
   return (
     <div style={{ height: '100vh' }}>
       <div style={{ padding: 8, borderBottom: '1px solid #eee', display: 'flex', gap: 8 }}>
-        <button className="btn" onClick={() => addNode('inputNode', { value: '' })}>Add Input</button>
-        <button className="btn" onClick={() => addNode('textNode', { value: 'New {{var}}' })}>Add Text</button>
-        <button className="btn" onClick={() => addNode('outputNode', {})}>Add Output</button>
-        <button className="btn" onClick={connectLastTwo}>Connect last two</button>
-        <button className="btn" onClick={resetTwo}>Reset (2 nodes)</button>
+        <button className="btn btn--secondary" onClick={() => addNode('inputNode', { value: '' })}>Add Input</button>
+        <button className="btn btn--secondary" onClick={() => addNode('textNode', { value: 'New {{var}}' })}>Add Text</button>
+        <button className="btn btn--secondary" onClick={() => addNode('outputNode', {})}>Add Output</button>
+        <button className="btn btn--secondary" onClick={connectLastTwo}>Connect last two</button>
+        <button className="btn btn--secondary" onClick={resetTwo}>Reset (2 nodes)</button>
         <button className="btn" onClick={onSubmit} disabled={submitting}>
           {submitting ? 'Submitting…' : 'Submit'}
         </button>
