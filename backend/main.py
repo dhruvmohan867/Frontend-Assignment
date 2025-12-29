@@ -8,16 +8,18 @@ from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173")
+origins_env = os.getenv("ALLOWED_ORIGINS", "")
 origins = [o.rstrip("/") for o in origins_env.split(",") if o.strip()]
+if not origins:
+    origins = ["*"]  # permissive fallback
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"https://.*\.vercel\.app",  # allow Vercel previews
-    allow_credentials=True,
+    allow_origin_regex=None,   # disable regex when using "*"
+    allow_credentials=False,   # must be false when allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
